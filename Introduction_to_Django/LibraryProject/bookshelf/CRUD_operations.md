@@ -20,8 +20,9 @@ book.title = "Nineteen Eighty-Four"
 book.save()
 print(f"Updated title: {book.title}")
 # Output: Updated title: Nineteen Eighty-Four
-book_to_delete = Book.objects.get(id=1)
-book_to_delete.delete()
+from bookshelf.models import Book
+book = Book.objects.get(id=1)
+book.delete()
 # Output: (1, {'bookshelf.Book': 1})
 
 # Confirm deletion
