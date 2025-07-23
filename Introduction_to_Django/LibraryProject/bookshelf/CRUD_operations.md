@@ -1,0 +1,30 @@
+# CRUD Operations for Book Model
+
+## Create Operation
+```python
+from bookshelf.models import Book
+book = Book(title="1984", author="George Orwell", publication_year=1949)
+book.save()
+print(f"Book created with ID: {book.id}")
+# Output: Book created with ID: 1
+retrieved_book = Book.objects.get(id=1)
+print(f"Title: {retrieved_book.title}")
+print(f"Author: {retrieved_book.author}")
+print(f"Publication Year: {retrieved_book.publication_year}")
+# Output:
+# Title: 1984
+# Author: George Orwell
+# Publication Year: 1949
+book_to_update = Book.objects.get(id=1)
+book_to_update.title = "Nineteen Eighty-Four"
+book_to_update.save()
+print(f"Updated title: {book_to_update.title}")
+# Output: Updated title: Nineteen Eighty-Four
+book_to_delete = Book.objects.get(id=1)
+book_to_delete.delete()
+# Output: (1, {'bookshelf.Book': 1})
+
+# Confirm deletion
+all_books = Book.objects.all()
+print(f"Number of books after deletion: {all_books.count()}")
+# Output: Number of books after deletion: 0
