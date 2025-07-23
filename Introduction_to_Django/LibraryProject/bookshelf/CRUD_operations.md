@@ -14,10 +14,11 @@ print(f"Publication Year: {retrieved_book.publication_year}")
 # Title: 1984
 # Author: George Orwell
 # Publication Year: 1949
-book_to_update = Book.objects.get(id=1)
-book_to_update.title = "Nineteen Eighty-Four"
-book_to_update.save()
-print(f"Updated title: {book_to_update.title}")
+from bookshelf.models import Book
+book = Book.objects.get(id=1)
+book.title = "Nineteen Eighty-Four"
+book.save()
+print(f"Updated title: {book.title}")
 # Output: Updated title: Nineteen Eighty-Four
 book_to_delete = Book.objects.get(id=1)
 book_to_delete.delete()
