@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>List of Books</title>
-</head>
-<body>
-    <h1>Books Available:</h1>
-    <ul>
-        {% for book in books %}
-        <li>{{ book.title }} by {{ book.author.name }}</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends "relationship_app/base.html" %}
+
+{% block title %}All Books{% endblock %}
+
+{% block content %}
+<h2>Books Available:</h2>
+<ul>
+    {% for book in books %}
+    <li>{{ book.title }} by {{ book.author.name }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
