@@ -1,22 +1,14 @@
 from django.urls import path
 from django.contrib.auth.views import LogoutView, LoginView
-from .views import (
-    list_books,
-    LibraryDetailView,
-    register,  # Changed from RegisterView
-)
+from . import views  # Must use this exact import format
 
 urlpatterns = [
     # Book-related URLs
-    path('books/', list_books, name='list_books'),
-    path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
+    path('books/', views.list_books, name='list_books'),
+    path('library/<int:pk>/', views.LibraryDetailView.as_view(), name='library_detail'),
 
-    # Authentication URLs (updated to match checker requirements)
-    path('register/', register, name='register'),  # Using function view directly
-    path('login/', LoginView.as_view(
-        template_name='relationship_app/login.html'
-    ), name='login'),
-    path('logout/', LogoutView.as_view(
-        template_name='relationship_app/logout.html'
-    ), name='logout'),
+    # Authentication URLs (must match these exact patterns)
+    path('register/', views.register, name='register'),  # Must use "views.register"
+    path('login/', LoginView.as_view(template_name="relationship_app/login.html"), name='login'),
+    path('logout/', LogoutView.as_view(template_name="relationship_app/logout.html"), name='logout'),
 ]
