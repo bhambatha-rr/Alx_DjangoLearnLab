@@ -1,7 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import DetailView
-from .models import Library  # This exact line must be present
-from .models import Book  # This can be on same or separate line
+from django.views.generic.detail import DetailView  # This exact import
+from .models import Library, Book
 
 # Function-based view (for listing books)
 def list_books(request):
