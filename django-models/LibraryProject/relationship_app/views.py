@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .models import Book, Library, UserProfile
 from .forms import BookForm
+from django.contrib.auth.decorators import permission_required
 
 def list_books(request):
     books = Book.objects.all()
