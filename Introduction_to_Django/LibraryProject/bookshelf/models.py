@@ -6,4 +6,4 @@ class Book(models.Model):
     publication_year = models.IntegerField()
 
     def __str__(self):
-        return self.title
+        return self.title  # This ensures books display by title in the admin
