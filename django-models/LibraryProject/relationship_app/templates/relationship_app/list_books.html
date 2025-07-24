@@ -1,8 +1,26 @@
 {% extends "relationship_app/base.html" %}
-
-{% block title %}All Books{% endblock %}
+{% block title %}Book List{% endblock %}
 
 {% block content %}
+<h1>Book List</h1>
+{% if perms.relationship_app.can_add_book %}
+    <a href="{% url 'add_book' %}">Add New Book</a>
+{% endif %}
+
+<ul>
+    {% for book in books %}
+    <li>
+        {{ book.title }} by {{ book.author }} ({{ book.publication_year }})
+        {% if perms.relationship_app.can_change_book %}
+            <a href="{% url 'edit_book' pk=book.pk %}">Edit</a>
+        {% endif %}
+        {% if perms.relationship_app.can_delete_book %}
+            <a href="{% url 'delete_book' pk=book.pk %}">Delete</a>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
 <h2>Books Available:</h2>
 <ul>
     {% for book in books %}
