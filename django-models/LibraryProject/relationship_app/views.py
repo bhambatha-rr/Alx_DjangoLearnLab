@@ -6,11 +6,7 @@ from django.contrib.auth import login
 from .models import Book, Library, UserProfile
 from .forms import BookForm
 
-# Book views
-def list_books(request):
-    books = Book.objects.all()
-    return render(request, 'relationship_app/list_books.html', {'books': books})
-
+# Book Views
 @permission_required('relationship_app.can_add_book', raise_exception=True)
 def add_book(request):
     if request.method == 'POST':
@@ -46,7 +42,11 @@ def delete_book(request, pk):
         return redirect('list_books')
     return render(request, 'relationship_app/book_confirm_delete.html', {'book': book})
 
-# Authentication views
+def list_books(request):
+    books = Book.objects.all()
+    return render(request, 'relationship_app/list_books.html', {'books': books})
+
+# Authentication Views
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -64,7 +64,7 @@ class CustomLoginView(LoginView):
 class CustomLogoutView(LogoutView):
     template_name = 'relationship_app/logout.html'
 
-# Role-based views
+# Role-Based Views
 @login_required
 def admin_view(request):
     return render(request, 'relationship_app/admin_view.html')
