@@ -13,11 +13,11 @@ from .views import (
 )
 
 urlpatterns = [
-    # Book-related URLs
+    # Book management URLs
+    path('add_book/', add_book, name='add_book'),
+    path('edit_book/<int:pk>/', edit_book, name='edit_book'),
+    path('delete_book/<int:pk>/', delete_book, name='delete_book'),
     path('books/', list_books, name='list_books'),
-    path('books/add/', add_book, name='add_book'),          # Required path
-    path('books/<int:pk>/edit/', edit_book, name='edit_book'),  # Required path
-    path('books/<int:pk>/delete/', delete_book, name='delete_book'),
 
     # Authentication URLs
     path('register/', register, name='register'),

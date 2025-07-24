@@ -1,17 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required, permission_required  # ADD THIS IMPORT
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .models import Book, Library, UserProfile
 from .forms import BookForm
-from django.contrib.auth.decorators import permission_required
 
+# Book views
 def list_books(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
-@permission_required('relationship_app.can_add_book', raise_exception=True)  # ADD DECORATOR
+@permission_required('relationship_app.can_add_book', raise_exception=True)
 def add_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
@@ -24,7 +24,7 @@ def add_book(request):
         form = BookForm()
     return render(request, 'relationship_app/book_form.html', {'form': form})
 
-@permission_required('relationship_app.can_change_book', raise_exception=True)  # ADD DECORATOR
+@permission_required('relationship_app.can_change_book', raise_exception=True)
 def edit_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
@@ -38,7 +38,7 @@ def edit_book(request, pk):
         form = BookForm(instance=book)
     return render(request, 'relationship_app/book_form.html', {'form': form})
 
-@permission_required('relationship_app.can_delete_book', raise_exception=True)  # ADD DECORATOR
+@permission_required('relationship_app.can_delete_book', raise_exception=True)
 def delete_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
     if request.method == 'POST':
@@ -46,6 +46,7 @@ def delete_book(request, pk):
         return redirect('list_books')
     return render(request, 'relationship_app/book_confirm_delete.html', {'book': book})
 
+# Authentication views
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -62,3 +63,16 @@ class CustomLoginView(LoginView):
 
 class CustomLogoutView(LogoutView):
     template_name = 'relationship_app/logout.html'
+
+# Role-based views
+@login_required
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
+
+@login_required
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html')
+
+@login_required
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')
