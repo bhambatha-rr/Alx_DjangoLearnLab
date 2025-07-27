@@ -1,0 +1,25 @@
+{% extends "relationship_app/base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard">
+    <h1>Admin Dashboard</h1>
+    <div class="admin-features">
+        <section>
+            <h2>User Management</h2>
+            <ul>
+                <li><a href="/admin/auth/user/">Manage Users</a></li>
+                <li><a href="/admin/auth/group/">Manage Groups</a></li>
+            </ul>
+        </section>
+        <section>
+            <h2>System Management</h2>
+            <ul>
+                <li><a href="/admin/">Django Admin</a></li>
+                <li><a href="/add_book/">Add New Book</a></li>
+            </ul>
+        </section>
+    </div>
+</div>
+{% endblock %}

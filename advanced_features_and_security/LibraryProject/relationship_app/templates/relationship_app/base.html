@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div style="float:right">
+        {% if user.is_authenticated %}
+            <span>Role: {{ user.userprofile.get_role_display }}</span>
+        {% if user.userprofile.role == 'ADMIN' %}
+            <a href="{% url 'admin_view' %}">Admin Panel</a>
+        {% elif user.userprofile.role == 'LIBRARIAN' %}
+            <a href="{% url 'librarian_view' %}">Librarian Tools</a>
+        {% else %}
+            <a href="{% url 'member_view' %}">My Account</a>
+        {% endif %}
+        <!-- END OF ADDITIONS -->
+        <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a> |
+        <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+    </div>
+    
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

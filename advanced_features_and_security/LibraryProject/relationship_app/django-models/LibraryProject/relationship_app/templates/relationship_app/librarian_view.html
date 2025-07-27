@@ -1,0 +1,18 @@
+{% extends "relationship_app/base.html" %}
+
+{% block title %}Librarian Dashboard{% endblock %}
+
+{% block content %}
+<div class="librarian-dashboard">
+    <h1>Librarian Dashboard</h1>
+    <div class="librarian-features">
+        <section>
+            <h2>Book Management</h2>
+            <ul>
+                <li><a href="/add_book/">Add New Book</a></li>
+                <li><a href="/books/">View All Books</a></li>
+            </ul>
+        </section>
+    </div>
+</div>
+{% endblock %}

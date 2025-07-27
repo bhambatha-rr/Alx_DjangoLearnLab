@@ -1,0 +1,23 @@
+{% extends "relationship_app/base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+<div class="admin-features">
+    <section>
+        <h2>User Management</h2>
+        <ul>
+            <li>Create/Edit Users</li>
+            <li>Assign Roles</li>
+        </ul>
+    </section>
+    <section>
+        <h2>System Controls</h2>
+        <ul>
+            <li>Database Backup</li>
+            <li>Audit Logs</li>
+        </ul>
+    </section>
+</div>
+{% endblock %}

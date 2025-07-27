@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Book App{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <!-- Add this authentication block -->
+            <div class="user-info" style="float: right; margin: 10px;">
+                {% if user.is_authenticated %}
+                    <p>Welcome, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+                {% else %}
+                    <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a></p>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Child templates will insert content here -->
+        {% endblock %}
+    </main>
+</body>
+</html>
