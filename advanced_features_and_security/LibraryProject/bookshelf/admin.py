@@ -1,9 +1,9 @@
 from django.contrib import admin
 from .models import Book
 
+@admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'publication_year')  # Columns to display
-    list_filter = ('author', 'publication_year')  # Right-side filters
-    search_fields = ('title', 'author')  # Search box functionality
-
-admin.site.register(Book, BookAdmin)
+    list_display = ('title', 'author', 'publication_year', 'added_by')
+    list_filter = ('author', 'publication_year')
+    search_fields = ('title', 'author')
+    raw_id_fields = ('added_by',)
