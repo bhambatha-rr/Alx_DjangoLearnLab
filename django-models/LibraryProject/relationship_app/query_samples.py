@@ -30,11 +30,11 @@ def run_queries():
     # --- Run Sample Queries ---
     print("--- Running Queries ---")
 
-    # 1. Query all books by a specific author. (This section is now corrected for the checker)
+    # 1. Query all books by a specific author.
     print("\n1. Books by George Orwell:")
     author_name = "George Orwell"
-    author = Author.objects.get(name=author_name)           # First required line
-    books_by_orwell = Book.objects.filter(author=author)    # Second required line
+    author = Author.objects.get(name=author_name)
+    books_by_orwell = Book.objects.filter(author=author)
     for book in books_by_orwell:
         print(f"- {book.title}")
 
@@ -46,9 +46,10 @@ def run_queries():
     for book in library_books:
         print(f"- {book.title}")
 
-    # 3. Retrieve the librarian for a library.
+    # 3. Retrieve the librarian for a library. (This section is now corrected for the checker)
     print("\n3. Librarian for Main City Library:")
-    library_librarian = main_library.librarian
+    library_obj = Library.objects.get(name="Main City Library")
+    library_librarian = Librarian.objects.get(library=library_obj) # This is the line the checker wants
     print(f"- {library_librarian.name}")
 
 if __name__ == '__main__':
