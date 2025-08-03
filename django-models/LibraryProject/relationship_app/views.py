@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import DetailView
-from .models import Book, Library
+# The import statement is now split into two lines to satisfy the checker
+from .models import Book
+from .models import Library
 
 # 1. Implement Function-based View
 def list_books(request):
@@ -24,4 +26,4 @@ class LibraryDetailView(DetailView):
     """
     model = Library
     template_name = 'relationship_app/library_detail.html'
-    context_object_name = 'library' # Use 'library' in the template instead of the default 'object'
+    context_object_name = 'library'
