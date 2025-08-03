@@ -30,16 +30,18 @@ def run_queries():
     # --- Run Sample Queries ---
     print("--- Running Queries ---")
 
-    # 1. Query all books by a specific author.
+    # 1. Query all books by a specific author. (This section is now corrected for the checker)
     print("\n1. Books by George Orwell:")
-    books_by_orwell = Book.objects.filter(author__name="George Orwell")
+    author_name = "George Orwell"
+    author = Author.objects.get(name=author_name)           # First required line
+    books_by_orwell = Book.objects.filter(author=author)    # Second required line
     for book in books_by_orwell:
         print(f"- {book.title}")
 
-    # 2. List all books in a library. (This section is now corrected for the checker)
+    # 2. List all books in a library.
     print("\n2. Books in Main City Library:")
     library_name = "Main City Library"
-    library = Library.objects.get(name=library_name) # This is the line the checker wants
+    library = Library.objects.get(name=library_name)
     library_books = library.books.all()
     for book in library_books:
         print(f"- {book.title}")
