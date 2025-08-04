@@ -5,7 +5,7 @@ from .forms import BookForm # Assuming forms.py exists from previous tasks
 
 # --- Main Views ---
 @login_required
-def list_books(request):
+def book_list(request):
     books = Book.objects.all()
     context = {'books': books}
     return render(request, 'bookshelf/list_books.html', context)
