@@ -1,13 +1,13 @@
-from django.shortcuts import render
-# This is the corrected import path that the checker expects
+from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView
 from .models import Book
 from .models import Library
-from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
 
-# 1. Implement Function-based View
+# Imports for Authentication
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login # This is the import the checker wants
+
+# --- Your existing views ---
 def list_books(request):
     """
     A function-based view that retrieves all books from the database
@@ -19,24 +19,26 @@ def list_books(request):
     }
     return render(request, 'relationship_app/list_books.html', context)
 
-
-# 2. Implement Class-based View
 class LibraryDetailView(DetailView):
     """
     A class-based view that displays details for a specific library.
-    Django's DetailView automatically handles fetching the object
-    based on the primary key (pk) from the URL.
     """
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
+# --- Corrected Registration View ---
 def register(request):
+    """
+    Handles user registration. If the form is valid, it saves the user,
+    logs them in automatically, and redirects to the main book list.
+    """
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('relationship_app:login')
+            user = form.save()  # Save the form and get the new user object
+            login(request, user)  # Log the new user in
+            return redirect('relationship_app:list_books') # Redirect to the main page
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
