@@ -145,6 +145,20 @@ SESSION_COOKIE_SECURE = True
 # Modern browsers have this, but it's good for older ones.
 SECURE_BROWSER_XSS_FILTER = True
 
+# Step 1: Configure Django for HTTPS Support
+# Redirects all non-HTTPS requests to HTTPS.
+# Your web server (like Nginx) should also be configured to do this.
+SECURE_SSL_REDIRECT = True
+
+# Step 1: Configure HSTS (HTTP Strict Transport Security)
+# Instructs the browser to only access the site via HTTPS for the next year.
+# This reduces the risk of man-in-the-middle attacks.
+SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds
+# Ensures that the HSTS policy applies to all subdomains of your site.
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# Allows your site to be submitted to browser preload lists for HSTS.
+SECURE_HSTS_PRELOAD = True
+
 # Prevents the browser from guessing content types, which can be a security risk.
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
