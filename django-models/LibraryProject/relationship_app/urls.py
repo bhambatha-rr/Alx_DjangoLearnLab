@@ -18,8 +18,8 @@ urlpatterns = [
     path('librarian-view/', views.librarian_view, name='librarian_view'),
     path('member-view/', views.member_view, name='member_view'),
 
-    # Permission-Based CRUD
-    path('book/add/', views.book_add, name='book_add'),
-    path('book/<int:pk>/edit/', views.book_edit, name='book_edit'),
-    path('book/<int:pk>/delete/', views.book_delete, name='book_delete'),
+    # CORRECTED Permission-Based CRUD URLs
+    path('add_book/', views.book_add, name='book_add'),
+    path('edit_book/<int:pk>/', views.book_edit, name='book_edit'),
+    path('delete_book/<int:pk>/', views.book_delete, name='book_delete'),
 ]
