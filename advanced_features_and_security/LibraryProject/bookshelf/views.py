@@ -2,11 +2,25 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 from .models import Book
 from .forms import BookForm # Assuming forms.py exists from previous tasks
+from django.shortcuts import render
 
 # --- Main Views ---
 @login_required
 def book_list(request):
-    books = Book.objects.all()
+    query = request.GET.get('q')
+
+    if query:
+        # This is a SAFE query. The Django ORM handles parameterization,
+        # preventing SQL injection. It looks for books where the title
+        # contains the query string, case-insensitively.
+        books = Book.objects.filter(title__icontains=query)
+    else:
+        # If no query, get all books
+        books = Book.objects.all()
+    # The following is an example of an UNSAFE query. NEVER DO THIS.
+    # unsafe_query = "SELECT * FROM bookshelf_book WHERE title LIKE '%" + query + "%'"
+    # books = Book.objects.raw(unsafe_query)
+
     context = {'books': books}
     return render(request, 'bookshelf/list_books.html', context)
 

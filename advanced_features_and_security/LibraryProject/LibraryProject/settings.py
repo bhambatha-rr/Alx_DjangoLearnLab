@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-s(ae385z%5z*sj3%)tfa-&d-!dwomn@z6x0#wf4-o5(*&nir3$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -39,10 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bookshelf',
     'relationship_app',
+    'csp',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'csp.middleware.CSPMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -131,3 +133,25 @@ AUTH_USER_MODEL = 'bookshelf.CustomUser'
 import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# Ensures the CSRF cookie is only sent over HTTPS in production.
+CSRF_COOKIE_SECURE = True
+
+# Ensures the session cookie is only sent over HTTPS in production.
+SESSION_COOKIE_SECURE = True
+
+# Enables the browser's built-in XSS protection.
+# Modern browsers have this, but it's good for older ones.
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevents the browser from guessing content types, which can be a security risk.
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Prevents your site from being rendered in an <iframe>, protecting against clickjacking.
+X_FRAME_OPTIONS = 'DENY'
+
+# --- CONTENT SECURITY POLICY ---
+# By default, this is very strict. It only allows content (scripts, styles, etc.)
+# to be loaded from the same origin ('self').
+CSP_DEFAULT_SRC = ("'self'",)
