@@ -5,6 +5,11 @@ from .views import list_books, LibraryDetailView, register, admin_view, libraria
 
 app_name = 'relationship_app'
 
+from .views import (
+    list_books, LibraryDetailView, register, admin_view, librarian_view, member_view,
+    BookCreateView, BookUpdateView, BookDeleteView
+)
+
 urlpatterns = [
     # Previous URLs
     path('books/', views.list_books, name='list_books'),
@@ -20,4 +25,8 @@ urlpatterns = [
     path('admin-view/', admin_view, name='admin_view'),
     path('librarian-view/', librarian_view, name='librarian_view'),
     path('member-view/', member_view, name='member_view'),
+
+    path('book/add/', BookCreateView.as_view(), name='book_add'),
+    path('book/<int:pk>/edit/', BookUpdateView.as_view(), name='book_edit'),
+    path('book/<int:pk>/delete/', BookDeleteView.as_view(), name='book_delete'),
 ]

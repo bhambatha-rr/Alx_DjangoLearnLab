@@ -3,6 +3,10 @@ from django.views.generic.detail import DetailView
 from .models import Book
 from .models import Library
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from .forms import BookForm
 
 # Imports for Authentication
 from django.contrib.auth.forms import UserCreationForm
@@ -70,3 +74,23 @@ def librarian_view(request):
 @user_passes_test(is_member)
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
+
+class BookCreateView(PermissionRequiredMixin, CreateView):
+    model = Book
+    form_class = BookForm
+    template_name = 'relationship_app/book_form.html'
+    success_url = reverse_lazy('relationship_app:list_books')
+    permission_required = 'relationship_app.can_add_book'
+
+class BookUpdateView(PermissionRequiredMixin, UpdateView):
+    model = Book
+    form_class = BookForm
+    template_name = 'relationship_app/book_form.html'
+    success_url = reverse_lazy('relationship_app:list_books')
+    permission_required = 'relationship_app.can_change_book'
+
+class BookDeleteView(PermissionRequiredMixin, DeleteView):
+    model = Book
+    template_name = 'relationship_app/book_confirm_delete.html'
+    success_url = reverse_lazy('relationship_app:list_books')
+    permission_required = 'relationship_app.can_delete_book'

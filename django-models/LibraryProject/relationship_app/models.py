@@ -13,6 +13,13 @@ class Book(models.Model):
     # on_delete=models.CASCADE means if an Author is deleted, all their books are also deleted.
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
+    class Meta:
+        permissions = [
+            ("can_add_book", "Can add book"),
+            ("can_change_book", "Can change book"),
+            ("can_delete_book", "Can delete book"),
+        ]
+
     def __str__(self):
         return self.title
 
