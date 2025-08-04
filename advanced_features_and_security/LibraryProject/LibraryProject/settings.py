@@ -134,6 +134,9 @@ import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# This setting tells Django to trust the X-Forwarded-Proto header from our proxy (Nginx)
+# to determine if a request is secure. This is CRITICAL for SECURE_SSL_REDIRECT to work.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Ensures the CSRF cookie is only sent over HTTPS in production.
 CSRF_COOKIE_SECURE = True
