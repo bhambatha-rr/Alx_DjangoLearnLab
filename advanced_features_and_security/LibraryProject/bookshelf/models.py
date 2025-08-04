@@ -35,5 +35,13 @@ class Book(models.Model):
     title = models.CharField(max_length=200)
     # author = models.ForeignKey(Author, on_delete=models.CASCADE) # This would need to be updated if Author model exists
 
+    class Meta:
+        permissions = [
+            ("can_view_book", "Can view book"),
+            ("can_create_book", "Can create book"),
+            ("can_edit_book", "Can edit book"),
+            ("can_delete_book", "Can delete book"),
+        ]
+
     def __str__(self):
         return self.title
