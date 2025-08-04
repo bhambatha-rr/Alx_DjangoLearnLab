@@ -1,14 +1,22 @@
 from django.urls import path
-# Import each view explicitly as required by the checker
-from .views import list_books
-from .views import LibraryDetailView
+from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
+from .views import list_books, LibraryDetailView, register
 
 app_name = 'relationship_app'
 
 urlpatterns = [
-    # URL for the function-based view to list all books
+    # Previous URLs
     path('books/', list_books, name='list_books'),
-
-    # URL for the class-based view to show a specific library's details
     path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
+
+    # Authentication URLs
+    path('register/', register, name='register'),
+    path('login/', auth_views.LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
+
+    # CORRECTED LOGOUT URL: Use the full namespaced name for next_page
+    path('logout/', auth_views.LogoutView.as_view(next_page='relationship_app:logged_out_page'), name='logout'),
+
+    # The page that the logout view redirects to
+    path('logged-out/', TemplateView.as_view(template_name='relationship_app/logout.html'), name='logged_out_page'),
 ]
