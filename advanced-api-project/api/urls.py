@@ -12,11 +12,11 @@ urlpatterns = [
     # URL for retrieving a single book by its primary key (pk)
     path('books/<int:pk>/', views.BookDetailView.as_view(), name='book-detail'),
 
-    # URL for updating a single book
-    path('books/<int:pk>/update/', views.BookUpdateView.as_view(), name='book-update'),
+    # CORRECTED URL for updating a single book
+    path('books/update/<int:pk>/', views.BookUpdateView.as_view(), name='book-update'),
 
-    # URL for deleting a single book
-    path('books/<int:pk>/delete/', views.BookDeleteView.as_view(), name='book-delete'),
+    # CORRECTED URL for deleting a single book
+    path('books/delete/<int:pk>/', views.BookDeleteView.as_view(), name='book-delete'),
 
     # URL for obtaining an authentication token
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
