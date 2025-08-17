@@ -33,3 +33,32 @@ Include the token in the `Authorization` header for subsequent requests:
     -   `GET`: Retrieves a single book by its ID. No authentication required.
     -   `PUT`/`PATCH`: Updates a book. Authentication required.
     -   `DELETE`: Deletes a book. Authentication required.
+
+## Advanced Queries
+
+The book list endpoint (`/api/books/`) supports filtering, searching, and ordering via query parameters.
+
+### Filtering
+
+Filter the results by providing an exact match for a field.
+
+-   **Filter by Publication Year:** `?publication_year=1965`
+-   **Filter by Author Name:** `?author__name=Frank%20Herbert`
+
+### Searching
+
+Perform a case-insensitive search across book titles and author names.
+
+-   **Example:** `?search=Dune`
+
+### Ordering
+
+Order the results by `title` or `publication_year`. Prepend a hyphen (`-`) to the field name for descending order.
+
+-   **Order by Title (A-Z):** `?ordering=title`
+-   **Order by Publication Year (Newest First):** `?ordering=-publication_year`
+
+### Combining Queries
+
+You can combine these parameters in a single request:
+`/api/books/?publication_year=1965&ordering=title`
