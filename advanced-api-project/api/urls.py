@@ -3,12 +3,21 @@ from rest_framework.authtoken.views import obtain_auth_token
 from . import views
 
 urlpatterns = [
-    # Endpoint for listing all books and creating a new one
-    path('books/', views.BookListCreateAPIView.as_view(), name='book-list-create'),
+    # URL for listing all books
+    path('books/', views.BookListView.as_view(), name='book-list'),
 
-    # Endpoint for retrieving, updating, or deleting a single book by its primary key (pk)
-    path('books/<int:pk>/', views.BookRetrieveUpdateDestroyAPIView.as_view(), name='book-detail'),
+    # URL for creating a new book
+    path('books/create/', views.BookCreateView.as_view(), name='book-create'),
 
-    # Endpoint for obtaining an authentication token
+    # URL for retrieving a single book by its primary key (pk)
+    path('books/<int:pk>/', views.BookDetailView.as_view(), name='book-detail'),
+
+    # URL for updating a single book
+    path('books/<int:pk>/update/', views.BookUpdateView.as_view(), name='book-update'),
+
+    # URL for deleting a single book
+    path('books/<int:pk>/delete/', views.BookDeleteView.as_view(), name='book-delete'),
+
+    # URL for obtaining an authentication token
     path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 ]
