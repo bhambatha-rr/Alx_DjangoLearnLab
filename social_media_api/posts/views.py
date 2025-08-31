@@ -2,6 +2,10 @@ from rest_framework import viewsets, filters, generics, permissions # Import the
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 from .permissions import IsAuthorOrReadOnly
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Post, Like
 
 class PostViewSet(viewsets.ModelViewSet):
     """
@@ -46,3 +50,18 @@ class FeedView(generics.ListAPIView):
         user = self.request.user
         following_users = user.following.all()
         return Post.objects.filter(author__in=following_users).order_by('-created_at')
+
+class LikeToggleView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, pk, format=None):
+        post = get_object_or_404(Post, pk=pk)
+        like, created = Like.objects.get_or_create(user=request.user, post=post)
+        if not created:
+            return Response({"status": "You have already liked this post."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"status": "Post liked"}, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, pk, format=None):
+        post = get_object_or_404(Post, pk=pk)
+        Like.objects.filter(user=request.user, post=post).delete()
+        return Response({"status": "Post unliked"}, status=status.HTTP_204_NO_CONTENT)
