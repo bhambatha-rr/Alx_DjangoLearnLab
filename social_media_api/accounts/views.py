@@ -24,6 +24,7 @@ class FollowToggleView(generics.GenericAPIView):
     """
     permission_classes = [permissions.IsAuthenticated]
     queryset = CustomUser.objects.all() # GenericAPIView often requires a queryset
+    lookup_url_kwarg = 'user_id'
 
     def post(self, request, pk, format=None):
         """Follow a user."""
