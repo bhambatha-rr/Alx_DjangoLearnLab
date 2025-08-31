@@ -53,7 +53,7 @@ class FeedView(generics.ListAPIView):
         following_users = user.following.all()
         return Post.objects.filter(author__in=following_users).order_by('-created_at')
 
-class LikeToggleView(generics.GenericAPIView): # Use GenericAPIView to get access to get_object_or_404
+class LikeView(generics.GenericAPIView): # Use GenericAPIView to get access to get_object_or_404
     permission_classes = [permissions.IsAuthenticated]
     queryset = Post.objects.all() # Required for get_object_or_404 in GenericAPIView
 
@@ -75,6 +75,10 @@ class LikeToggleView(generics.GenericAPIView): # Use GenericAPIView to get acces
             )
 
         return Response({"status": "Post liked"}, status=status.HTTP_201_CREATED)
+
+class UnlikeView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Post.objects.all()
 
     def delete(self, request, pk, format=None):
         post = generics.get_object_or_404(Post, pk=pk)
