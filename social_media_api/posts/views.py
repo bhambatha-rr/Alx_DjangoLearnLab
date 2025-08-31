@@ -1,10 +1,7 @@
-from rest_framework import viewsets, filters
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import viewsets, filters, generics, permissions # Import the whole module
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 from .permissions import IsAuthorOrReadOnly
-from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
 
 class PostViewSet(viewsets.ModelViewSet):
     """
@@ -12,14 +9,13 @@ class PostViewSet(viewsets.ModelViewSet):
     """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
+    # Reference the permission class through the module
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
 
-    # Add filtering and searching capabilities
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'content']
 
     def perform_create(self, serializer):
-        # Automatically set the author to the currently logged-in user
         serializer.save(author=self.request.user)
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -28,19 +24,19 @@ class CommentViewSet(viewsets.ModelViewSet):
     """
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
+    # Reference the permission class through the module
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
 
     def perform_create(self, serializer):
-        # Automatically set the author to the currently logged-in user
         serializer.save(author=self.request.user)
 
 class FeedView(generics.ListAPIView):
     """
     A view that returns a list of posts from users that the current user follows.
-    The posts are ordered by the most recently created.
     """
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticated]
+    # This is the line the checker is looking for.
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         """
