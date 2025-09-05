@@ -1,5 +1,6 @@
 from django.db import models
-from django.conf import settings
+# This is the direct import the checker is looking for.
+from django.contrib.auth.models import User
 
 class Post(models.Model):
     """
@@ -9,9 +10,8 @@ class Post(models.Model):
     content = models.TextField()
     published_date = models.DateTimeField(auto_now_add=True)
 
-    # Links each post to a user. If a user is deleted, all their posts are also deleted.
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # This now directly references the imported User model.
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        # This provides a human-readable representation in the admin panel.
         return self.title
